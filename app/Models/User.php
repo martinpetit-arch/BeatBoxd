@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -29,4 +30,19 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function critiques()
+{
+    return $this->hasMany(Critique::class);
+}
+
+public function likes()
+{
+    return $this->hasMany(Like::class);
+}
+
+public function fans()
+{
+    return $this->hasMany(Fan::class);
+}
 }
