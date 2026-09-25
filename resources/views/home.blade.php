@@ -33,24 +33,20 @@
         </div>
     </header>
 
-    <main>
+    <main class="home-page">
         <section class="hero">
             <div class="container">
                 <p class="hero-subtitle">Bienvenue sur la plateforme BeatBoxd, la première plateforme dédiés aux mélomanes</p>
-                <h1 class="hero-title">Qu'est-ce que la vie sans musique ?</h1>
+                <h1 class="hero-title">Qu'est-ce que la vie sans</h1>
+                <h1 class="hero-title2">musique ?</h1>
                 <form class="search" method="GET" action="{{ route('recherche') }}">
                     <span class="search-icon" aria-hidden="true">⌕</span>
                     <input type="search" name="q" placeholder="Rechercher un album, artiste ou morceau" aria-label="Rechercher">
                 </form>
             </div>
         </section>
-
+        
         <div class="container">
-            <p>
-                <a class="btn btn-primary" href="{{ route('albums.create') }}">Ajouter un album</a>
-                <a class="btn btn-secondary" href="{{ route('artistes.create') }}">Ajouter un artiste</a>
-            </p>
-
             <section class="section top-albums-section" id="top-albums">
                 <div class="section-header"><h2 class="section-title">Nos top 3 des meilleurs albums {{ now()->year }}</h2></div>
                 <img class="top-albums-vinyl" src="{{ asset('assets/vinyle.svg') }}" alt="">
@@ -64,48 +60,18 @@
                                     <div class="top-album-cover album-cover-placeholder">No cover</div>
                                 @endif
                                 <div>
-                                    <span class="top-album-number">0{{ $position + 1 }}</span>
-                                    <h3 class="top-album-title"><a href="{{ route('albums.show', $album->id) }}">{{ $album->titre }}</a></h3>
-                                    <p class="album-artist">{{ $album->artiste->nom }}</p>
+                                    <h3 class="top-album-heading">{{ $position + 1 }} - {{ $album->artiste->nom }}</h3>
+                                    <h4 class="top-album-title"><a href="{{ route('albums.show', $album->id) }}">{{ $album->titre }}</a></h4>
                                     @if ($album->description)
                                         <p class="top-album-description">{{ $album->description }}</p>
                                     @endif
-                                    <p class="album-rating">★ {{ number_format($album->critiques_avg_note, 1) }} / 5</p>
+                                    <div class="album-rating">★ {{ number_format($album->critiques_avg_note, 1) }} / 5</div>
                                 </div>
                             </article>
                         @endforeach
                     </div>
                 @else
                     <p>Aucun album noté pour le moment.</p>
-                @endif
-            </section>
-
-            <section class="section" id="singles">
-                <div class="section-header"><h2 class="section-title">Les derniers singles</h2></div>
-                @if ($derniersSingles->isNotEmpty())
-                    <div class="single-grid">
-                        @foreach ($derniersSingles as $single)
-                            @php($morceau = $single->morceaux->first())
-                            <a class="single-card" href="{{ route('albums.show', $single->id) }}">
-                                <img class="single-card-device" src="{{ asset('assets/naviguation-ipod.svg') }}" alt="">
-                                <div class="single-card-screen">
-                                    @if ($single->pochette)
-                                        <img class="single-card-cover" src="{{ $single->pochette }}" alt="Pochette de {{ $single->titre }}">
-                                    @else
-                                        <div class="single-card-cover album-cover-placeholder">No cover</div>
-                                    @endif
-                                    <div class="single-card-track">
-                                        <strong>{{ $morceau->titre }}</strong>
-                                        <span>{{ $single->artiste->nom }}</span>
-                                    </div>
-                                    <div class="single-card-progress" aria-hidden="true"><span></span></div>
-                                    <div class="single-card-duration">0:00 <span>{{ $morceau->duree_formatee ?? '--:--' }}</span></div>
-                                </div>
-                            </a>
-                        @endforeach
-                    </div>
-                @else
-                    <p>Aucun single pour le moment.</p>
                 @endif
             </section>
 
@@ -134,8 +100,101 @@
                 @endif
             </section>
 
+            <section class="section" id="singles">
+                <div class="section-header"><h2 class="section-title">Les derniers singles</h2></div>
+                @if ($derniersSingles->isNotEmpty())
+                    <div class="single-grid">
+                        @foreach ($derniersSingles as $single)
+                            @php($morceau = $single->morceaux->first())
+                            <a class="single-card" href="{{ route('albums.show', $single->id) }}">
+                                <img class="single-card-device" src="{{ asset('assets/naviguation-ipod.svg') }}" alt="">
+                                <div class="single-card-screen">
+                                    @if ($single->pochette)
+                                        <img class="single-card-cover" src="{{ $single->pochette }}" alt="Pochette de {{ $single->titre }}">
+                                    @else
+                                        <div class="single-card-cover album-cover-placeholder">No cover</div>
+                                    @endif
+                                    <div class="single-card-track">
+                                        <strong>{{ $morceau->titre }}</strong>
+                                        <span>{{ $single->artiste->nom }}</span>
+                                    </div>
+                                    <div class="single-card-progress" aria-hidden="true"><span></span></div>
+                                    <div class="single-card-duration">0:00 <span>{{ $morceau->duree_formatee ?? '--:--' }}</span></div>
+                                </div>
+                            </a>
+                            <a class="single-card" href="{{ route('albums.show', $single->id) }}">
+                                <img class="single-card-device" src="{{ asset('assets/naviguation-ipod.svg') }}" alt="">
+                                <div class="single-card-screen">
+                                    @if ($single->pochette)
+                                        <img class="single-card-cover" src="{{ $single->pochette }}" alt="Pochette de {{ $single->titre }}">
+                                    @else
+                                        <div class="single-card-cover album-cover-placeholder">No cover</div>
+                                    @endif
+                                    <div class="single-card-track">
+                                        <strong>{{ $morceau->titre }}</strong>
+                                        <span>{{ $single->artiste->nom }}</span>
+                                    </div>
+                                    <div class="single-card-progress" aria-hidden="true"><span></span></div>
+                                    <div class="single-card-duration">0:00 <span>{{ $morceau->duree_formatee ?? '--:--' }}</span></div>
+                                </div>
+                            </a>
+                            <a class="single-card" href="{{ route('albums.show', $single->id) }}">
+                                <img class="single-card-device" src="{{ asset('assets/naviguation-ipod.svg') }}" alt="">
+                                <div class="single-card-screen">
+                                    @if ($single->pochette)
+                                        <img class="single-card-cover" src="{{ $single->pochette }}" alt="Pochette de {{ $single->titre }}">
+                                    @else
+                                        <div class="single-card-cover album-cover-placeholder">No cover</div>
+                                    @endif
+                                    <div class="single-card-track">
+                                        <strong>{{ $morceau->titre }}</strong>
+                                        <span>{{ $single->artiste->nom }}</span>
+                                    </div>
+                                    <div class="single-card-progress" aria-hidden="true"><span></span></div>
+                                    <div class="single-card-duration">0:00 <span>{{ $morceau->duree_formatee ?? '--:--' }}</span></div>
+                                </div>
+                                <a class="single-card" href="{{ route('albums.show', $single->id) }}">
+                                <img class="single-card-device" src="{{ asset('assets/naviguation-ipod.svg') }}" alt="">
+                                <div class="single-card-screen">
+                                    @if ($single->pochette)
+                                        <img class="single-card-cover" src="{{ $single->pochette }}" alt="Pochette de {{ $single->titre }}">
+                                    @else
+                                        <div class="single-card-cover album-cover-placeholder">No cover</div>
+                                    @endif
+                                    <div class="single-card-track">
+                                        <strong>{{ $morceau->titre }}</strong>
+                                        <span>{{ $single->artiste->nom }}</span>
+                                    </div>
+                                    <div class="single-card-progress" aria-hidden="true"><span></span></div>
+                                    <div class="single-card-duration">0:00 <span>{{ $morceau->duree_formatee ?? '--:--' }}</span></div>
+                                </div>
+                            </a>
+                            <a class="single-card" href="{{ route('albums.show', $single->id) }}">
+                                <img class="single-card-device" src="{{ asset('assets/naviguation-ipod.svg') }}" alt="">
+                                <div class="single-card-screen">
+                                    @if ($single->pochette)
+                                        <img class="single-card-cover" src="{{ $single->pochette }}" alt="Pochette de {{ $single->titre }}">
+                                    @else
+                                        <div class="single-card-cover album-cover-placeholder">No cover</div>
+                                    @endif
+                                    <div class="single-card-track">
+                                        <strong>{{ $morceau->titre }}</strong>
+                                        <span>{{ $single->artiste->nom }}</span>
+                                    </div>
+                                    <div class="single-card-progress" aria-hidden="true"><span></span></div>
+                                    <div class="single-card-duration">0:00 <span>{{ $morceau->duree_formatee ?? '--:--' }}</span></div>
+                                </div>
+                            </a>
+                            </a>
+                        @endforeach
+                    </div>
+                @else
+                    <p>Aucun single pour le moment.</p>
+                @endif
+            </section>
+
             <section class="section" id="listes">
-                <div class="section-header"><h2 class="section-title">Listes personnalisées</h2></div>
+                <div class="section-header"><h2 class="section-title">En fonction du mood</h2></div>
                 @if ($listes->count() > 0)
                     <div class="list-grid">
                         @foreach ($listes as $liste)

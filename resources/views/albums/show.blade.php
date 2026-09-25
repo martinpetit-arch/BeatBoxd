@@ -44,13 +44,12 @@
                         @else
                             <div class="album-detail-cover album-cover-placeholder">No cover</div>
                         @endif
-                        @php($noteMoyenne = $album->note_moyenne ?? 0)
-                        @php($noteEtoiles = round($noteMoyenne * 2) / 2)
+                        @php($noteMoyenne = round((float) $album->note_moyenne * 2) / 2)
                         <div class="album-detail-rating" aria-label="Note moyenne : {{ number_format($noteMoyenne, 1) }} sur 5">
                             @for ($i = 1; $i <= 5; $i++)
-                                @if ($i <= $noteEtoiles)
+                                @if ($i <= $noteMoyenne)
                                     <img src="{{ asset('assets/star-full.svg') }}" alt="Étoile pleine">
-                                @elseif ($i - 0.5 == $noteEtoiles)
+                                @elseif ($i - 0.5 == $noteMoyenne)
                                     <img src="{{ asset('assets/star-half.svg') }}" alt="Demi-étoile">
                                 @else
                                     <img class="rating-star-empty" src="{{ asset('assets/star-full.svg') }}" alt="Étoile vide">

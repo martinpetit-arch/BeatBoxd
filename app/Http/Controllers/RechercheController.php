@@ -21,9 +21,12 @@ class RechercheController extends Controller
             $mots = preg_split('/\s+/', $terme);
             $mots = array_values(array_filter($mots, fn ($mot) => $mot !== ''));
 
-            $albums = Album::where(function ($query) use ($mots) {
+            $albums = Album::with('artiste')->where(function ($query) use ($mots) {
                 foreach ($mots as $mot) {
-                    $query->orWhere('titre', 'like', '%'.$mot.'%');
+                    $query->orWhere('titre', 'like', '%'.$mot.'%')
+                        ->orWhereHas('artiste', function ($artistQuery) use ($mot) {
+                            $artistQuery->where('nom', 'like', '%'.$mot.'%');
+                        });
                 }
             })->get();
 
