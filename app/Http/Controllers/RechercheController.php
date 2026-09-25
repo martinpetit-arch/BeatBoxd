@@ -18,9 +18,26 @@ class RechercheController extends Controller
         $morceaux = collect();
 
         if ($terme !== '') {
-            $albums = Album::where('titre', 'like', '%' . $terme . '%')->get();
-            $artistes = Artiste::where('nom', 'like', '%' . $terme . '%')->get();
-            $morceaux = Morceau::where('titre', 'like', '%' . $terme . '%')->with('album.artiste')->get();
+            $mots = preg_split('/\s+/', $terme);
+            $mots = array_values(array_filter($mots, fn ($mot) => $mot !== ''));
+
+            $albums = Album::where(function ($query) use ($mots) {
+                foreach ($mots as $mot) {
+                    $query->orWhere('titre', 'like', '%'.$mot.'%');
+                }
+            })->get();
+
+            $artistes = Artiste::where(function ($query) use ($mots) {
+                foreach ($mots as $mot) {
+                    $query->orWhere('nom', 'like', '%'.$mot.'%');
+                }
+            })->get();
+
+            $morceaux = Morceau::where(function ($query) use ($mots) {
+                foreach ($mots as $mot) {
+                    $query->orWhere('titre', 'like', '%'.$mot.'%');
+                }
+            })->with('album.artiste')->get();
         }
 
         return view('recherche', [

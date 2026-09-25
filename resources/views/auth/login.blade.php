@@ -1,50 +1,70 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Connexion - BeatBoxd</title>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center">
-    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h1 class="text-2xl font-bold text-center mb-6">Connexion</h1>
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a class="logo" href="{{ route('home') }}" aria-label="BeatBoxd">
+                <img class="logo-image" src="{{ asset('assets/logo.svg') }}" alt="BeatBoxd">
+            </a>
+            <nav class="main-nav" aria-label="Navigation principale">
+                <a href="{{ route('albums.index') }}">Albums</a>
+                <a href="{{ route('artistes.index') }}">Artistes</a>
+                <a href="{{ route('listes.index') }}">Listes</a>
+            </nav>
+            <div class="header-actions">
+                <a class="header-button header-button-outline" href="{{ route('login') }}">Connexion</a>
+                <a class="header-button header-button-signup" href="{{ route('register') }}">S'inscrire</a>
+                <a class="header-search" href="{{ route('recherche') }}" aria-label="Rechercher">⌕</a>
+            </div>
+        </div>
+    </header>
 
-        @if ($errors->any())
-            <div class="mb-4 rounded bg-red-100 border border-red-300 p-3 text-sm text-red-700">
-                <ul>
+    <main class="auth-page">
+        <div class="auth-container">
+            <h1 class="auth-title">Reconnecte toi à ton compte</h1>
+            <p class="auth-switch">Pas encore de compte ? <a href="{{ route('register') }}">Clique ici !</a></p>
+
+            @if ($errors->any())
+                <div class="auth-errors">
                     @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
+                        <p>{{ $error }}</p>
                     @endforeach
-                </ul>
-            </div>
-        @endif
+                </div>
+            @endif
 
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
+            <form class="auth-form" method="POST" action="{{ route('login') }}">
+                @csrf
+                <div class="form-group">
+                    <label class="form-label" for="email">E-mail</label>
+                    <input class="form-input" type="email" id="email" name="email" value="{{ old('email') }}" placeholder="Jean.dupont@mmibordeaux.com" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="password">Mot de passe <small>(minimum 8 caractères)</small></label>
+                    <input class="form-input" type="password" id="password" name="password" placeholder="********" required>
+                </div>
+                <button class="auth-submit btn btn-primary" type="submit">Confirmer</button>
+            </form>
+        </div>
+    </main>
 
-            <div class="mb-4">
-                <label for="email" class="block text-sm font-medium text-gray-700">Adresse e-mail</label>
-                <input type="email" id="email" name="email" value="{{ old('email') }}" required
-                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-            </div>
-
-            <div class="mb-6">
-                <label for="password" class="block text-sm font-medium text-gray-700">Mot de passe</label>
-                <input type="password" id="password" name="password" required
-                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-            </div>
-
-            <button type="submit"
-                class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition">
-                Se connecter
-            </button>
-        </form>
-
-        <p class="mt-6 text-center text-sm text-gray-600">
-            Pas encore inscrit ?
-            <a href="{{ route('register') }}" class="text-indigo-600 hover:underline">Créer un compte</a>
-        </p>
-    </div>
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <a class="logo" href="{{ route('home') }}" aria-label="BeatBoxd">
+                <img class="logo-image" src="{{ asset('assets/logo.svg') }}" alt="BeatBoxd">
+            </a>
+            <nav class="footer-links" aria-label="Pied de page">
+                <a href="#">Conditions générales d'utilisation</a>
+                <a href="#">Protection des données</a>
+                <a href="#">Cookies</a>
+                <a href="#">Confidentialité</a>
+            </nav>
+        </div>
+    </footer>
 </body>
 </html>

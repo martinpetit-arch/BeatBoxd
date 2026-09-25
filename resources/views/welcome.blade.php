@@ -47,6 +47,21 @@
                 </nav>
             @endif
         </header>
+
+        <div class="w-full max-w-4xl mx-auto px-4 mb-6">
+            <form method="GET" action="{{ route('recherche') }}" class="flex gap-2 items-center justify-center">
+                <input
+                    type="text"
+                    name="q"
+                    placeholder="Rechercher un album, artiste ou morceau"
+                    class="w-full max-w-xl px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                >
+                <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
+                    Rechercher
+                </button>
+            </form>
+        </div>
+
         <div class="flex items-center justify-center w-full transition-opacity opacity-100 duration-750 lg:grow starting:opacity-0">
             <main class="flex max-w-[335px] w-full flex-col-reverse lg:max-w-4xl lg:flex-row">
                 <div class="text-[13px] leading-[20px] flex-1 p-6 pb-6 lg:p-20 lg:pb-10 bg-white dark:bg-[#161615] dark:text-[#EDEDEC] shadow-[inset_0px_0px_0px_1px_rgba(26,26,0,0.16)] dark:shadow-[inset_0px_0px_0px_1px_#fffaed2d] rounded-bl-lg rounded-br-lg lg:rounded-tl-lg lg:rounded-br-none">

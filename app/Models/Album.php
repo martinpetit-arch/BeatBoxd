@@ -28,19 +28,20 @@ class Album extends Model
         return $this->hasMany(Critique::class);
     }
 
-    public function getNoteMoyenneAttribute()
-    {
-        return $this->critiques->avg('note');
-    }
-
     public function likes(): HasMany
     {
         return $this->hasMany(Like::class);
     }
 
-    // Vérifie si un utilisateur précis a liké cet album
     public function estLikePar($userId): bool
     {
         return $this->likes()->where('user_id', $userId)->exists();
+    }
+
+    public function getNoteMoyenneAttribute(): ?float
+    {
+        $moyenne = $this->critiques->avg('note');
+
+        return $moyenne === null ? null : round((float) $moyenne, 1);
     }
 }

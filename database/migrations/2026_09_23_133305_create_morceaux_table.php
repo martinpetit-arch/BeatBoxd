@@ -8,11 +8,11 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('morceaus', function (Blueprint $table) {
+        Schema::create('morceaux', function (Blueprint $table) {
             $table->id();
             $table->string('titre');
-            $table->integer('numero'); // position dans la tracklist (1, 2, 3...)
-            $table->integer('duree'); // durée en secondes
+            $table->integer('numero');
+            $table->integer('duree');
             $table->foreignId('album_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
@@ -20,6 +20,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('morceaus');
+        Schema::dropIfExists('morceaux');
     }
 };
